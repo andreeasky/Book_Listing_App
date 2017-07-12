@@ -1,6 +1,5 @@
 package com.example.android.booklisting;
 
-import android.nfc.Tag;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -143,7 +142,7 @@ public final class Utils {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e( LOG_TAG, "Problem parsing the earthquake JSON books list", e );
+            Log.e( LOG_TAG, "Problem parsing the JSON books list", e );
         }
 
         // Return the list of books
@@ -168,7 +167,7 @@ public final class Utils {
             //
             String jsonResponse = null;
             try {
-                jsonResponse = makeHttpRequest(url);
+                jsonResponse = makeHTTPRequest(url);
             } catch (IOException e) {
                 Log.e( LOG_TAG, "Error perfoming the HTTP request", e );
 
