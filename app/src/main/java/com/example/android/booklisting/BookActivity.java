@@ -15,9 +15,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.net.HttpURLConnection;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,10 +51,10 @@ public class BookActivity extends AppCompatActivity {
         ListView bookListView=(ListView) findViewById(R.id.list_view);
 
         // Find a reference to the EditText in the layout
-        searchBook=(EditText) findViewById(search);
+        searchBook =(EditText) findViewById(search);
 
         // Find a reference to the Search Button in the layout
-        ImageButton buttonSearch=(ImageButton) findViewById(R.id.button_search);
+        ImageButton buttonSearch =(ImageButton) findViewById(R.id.button_search);
 
         // Find a reference to the empty state TextView
         emptyStateTextView=(TextView) findViewById(R.id.empty_text_view);
@@ -89,28 +86,6 @@ public class BookActivity extends AppCompatActivity {
             }
         });
 
-        BookAsyncTask task=new BookAsyncTask();
-
-        // Start the AsyncTask to fetch the books data
-        new BookAsyncTask().execute(BOOK_REQUEST_URL + searchBook + MAX_RESULTS);
-
-        // If there is an internet connection
-        if (isInternetConnected) {
-            Log.e(LOG_TAG, "This is called when there is an internet connection.");
-            // Start the AsyncTask to fetch the books data
-            task.execute(BOOK_REQUEST_URL);
-
-        } else {
-            Log.e(LOG_TAG, "This is called when there is no internet connection.");
-            // Otherwise, display error
-            // First, hide loading indicator so error will be visible
-            loadingIndicator.setVisibility(View.GONE);
-            // Show the empty state with no connection error message
-            emptyStateTextView.setVisibility(View.VISIBLE);
-            // Update empty state with no connection error message
-            emptyStateTextView.setText(R.string.no_internet_connection);
-        }
-
         // Set a click listener to the ImageButton Search which sends query to the URL based on the user input
 
         buttonSearch.setOnClickListener(new ImageButton.OnClickListener() {
@@ -132,6 +107,30 @@ public class BookActivity extends AppCompatActivity {
                 }
             }
         });
+
+        String searchTerm = searchBook.getText().toString();
+
+        BookAsyncTask task = new BookAsyncTask();
+
+        // Start the AsyncTask to fetch the books data
+        new BookAsyncTask().execute(BOOK_REQUEST_URL + searchBook + MAX_RESULTS);
+
+        // If there is an internet connection
+        if (isInternetConnected) {
+            Log.e(LOG_TAG, "This is called when there is an internet connection.");
+            // Start the AsyncTask to fetch the books data
+            task.execute(BOOK_REQUEST_URL);
+
+        } else {
+            Log.e(LOG_TAG, "This is called when there is no internet connection.");
+            // Otherwise, display error
+            // First, hide loading indicator so error will be visible
+            loadingIndicator.setVisibility(View.GONE);
+            // Show the empty state with no connection error message
+            emptyStateTextView.setVisibility(View.VISIBLE);
+            // Update empty state with no connection error message
+            emptyStateTextView.setText(R.string.no_internet_connection);
+        }
     }
 
     // Check the internet connection
@@ -183,59 +182,37 @@ public class BookActivity extends AppCompatActivity {
             // Don't perform the request if there are no URLs, or the first URL is null.
             if (urls.length < 1 || urls[0] == null) {
                 return null;
-
-                EditText searchBook=EditText.getText().toString();
-
-                List<Book> result=Utils.fetchBooksData(urls[0]);
-                try {
-                    URL url=new URL("https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=") + searchBook;
-                    HttpURLConnection urlConnection=(HttpURLConnection) url.openConnection();
-                    try {
-                        urlConnection.setRequestMethod("GET");
-                    } catch (ProtocolException e) {
-                        e.printStackTrace();
-                    }
-                    return result;
-                    {
-
-                    }
-                }
             }
+            List<Book> result=Utils.fetchBooksData(urls[0]);
+
+                return result;
         }
 
-                    // This method runs on the main UI thread after the background work has been
-                    // completed. This method receives as input, the return value from the doInBackground()
-                    // method. First we clear out the adapter, to get rid of books data from a previous
-                    // query to Google Books API. Then we update the adapter with the new list of books,
-                    // which will trigger the ListView to re-populate its list items.
-                    //
-                    @Override
-                    protected void onPostExecute (List < Book > books) {
-                        // First, hide loading indicator so error will be visible
-                        loadingIndicator.setVisibility(View.GONE);
-                        // Clear the adapter of previous book data
-                        bookAdapter.clear();
+            // This method runs on the main UI thread after the background work has been
+        // completed. This method receives as input, the return value from the doInBackground()
+        // method. First we clear out the adapter, to get rid of books data from a previous
+        // query to Google Books API. Then we update the adapter with the new list of books,
+        // which will trigger the ListView to re-populate its list items.
+        //
+        @Override
+        protected void onPostExecute(List<Book> books) {
+            // First, hide loading indicator so error will be visible
+            loadingIndicator.setVisibility(View.GONE);
+            // Clear the adapter of previous book data
+            bookAdapter.clear();
 
-                        // If there is a valid list of Books, then add them to the adapter's
-                        // data set. This will trigger the ListView to update.
-                        if (books != null && !books.isEmpty()) {
-                            bookAdapter.addAll(books);
-                        } else {
-                            // Show the empty state with no connection error message
-                            emptyStateTextView.setVisibility(View.VISIBLE);
-                            // Update empty state with no connection error message
-                            emptyStateTextView.setText(R.string.no_data);
-                        }
-                    }
-                }
+            // If there is a valid list of Books, then add them to the adapter's
+            // data set. This will trigger the ListView to update.
+            if (books != null && !books.isEmpty()) {
+                bookAdapter.addAll(books);
+            } else {
+                // Show the empty state with no connection error message
+                emptyStateTextView.setVisibility(View.VISIBLE);
+                // Update empty state with no connection error message
+                emptyStateTextView.setText(R.string.no_data);
             }
-
-
-
-
-
-
-
-
+        }
+    }
+}
 
 
