@@ -4,7 +4,7 @@ package com.example.android.booklisting;
  * Created by User on 7/10/2017.
  */
 
-// A Book object contains information related to a single book
+// A Book object contains information related to a single book.
 
 public class Book {
 
@@ -69,7 +69,7 @@ public class Book {
     }
 
     /**
-     * Returns the picture of the book.
+     * Returns the URL of the book.
      */
     public String getUrl(){
         return bookUrl;
