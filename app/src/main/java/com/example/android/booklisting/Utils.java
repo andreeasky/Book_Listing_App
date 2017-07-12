@@ -162,7 +162,6 @@ public final class Utils {
             // Create URL object
             URL url = createUrl( requestUrl );
 
-
             //Make an HTTP request to the given URL and return a JSON as the response.
             //
             String jsonResponse = null;
@@ -177,11 +176,11 @@ public final class Utils {
             return extractFeatureFromJson( jsonResponse );
         }
 
-        // Returns new URL object from the given string URL.
-        private static URL createUrl (String stringUrl){
+        // Returns new URL object from the given search query.
+        private static URL createUrl (String searchBook){
             URL url = null;
             try {
-                url = new URL( stringUrl );
+                url = new URL( searchBook );
             } catch (MalformedURLException e) {
                 Log.e( LOG_TAG, "Problem building the URL ", e );
             }

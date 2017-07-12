@@ -15,8 +15,13 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.net.HttpURLConnection;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.android.booklisting.R.id.search;
 
 public class BookActivity extends AppCompatActivity {
 
@@ -24,7 +29,7 @@ public class BookActivity extends AppCompatActivity {
     public static final String LOG_TAG=BookActivity.class.getName();
 
     // This is the Google API URL
-    private static final String BOOK_REQUEST_URL="https://www.googleapis.com/books/v1/volumes?q=[YOUR SEARCH GOES HERE]&maxResults=1";
+    private static final String BOOK_REQUEST_URL="https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=";
     // Add a maximum results of 20 to search query
     private static final String MAX_RESULTS="&maxResults=20";
     // Adapter for the list of books
@@ -49,7 +54,7 @@ public class BookActivity extends AppCompatActivity {
         ListView bookListView=(ListView) findViewById(R.id.list_view);
 
         // Find a reference to the EditText in the layout
-        searchBook=(EditText) findViewById(R.id.search);
+        searchBook=(EditText) findViewById(search);
 
         // Find a reference to the Search Button in the layout
         ImageButton buttonSearch=(ImageButton) findViewById(R.id.button_search);
@@ -85,6 +90,9 @@ public class BookActivity extends AppCompatActivity {
         });
 
         BookAsyncTask task=new BookAsyncTask();
+
+        // Start the AsyncTask to fetch the books data
+        new BookAsyncTask().execute(BOOK_REQUEST_URL + searchBook + MAX_RESULTS);
 
         // If there is an internet connection
         if (isInternetConnected) {
@@ -175,37 +183,59 @@ public class BookActivity extends AppCompatActivity {
             // Don't perform the request if there are no URLs, or the first URL is null.
             if (urls.length < 1 || urls[0] == null) {
                 return null;
-            }
 
-            List<Book> result=Utils.fetchBooksData(urls[0]);
-            return result;
-        }
+                EditText searchBook=EditText.getText().toString();
 
-        // This method runs on the main UI thread after the background work has been
-        // completed. This method receives as input, the return value from the doInBackground()
-        // method. First we clear out the adapter, to get rid of books data from a previous
-        // query to Google Books API. Then we update the adapter with the new list of books,
-        // which will trigger the ListView to re-populate its list items.
-        //
-        @Override
-        protected void onPostExecute(List<Book> books) {
-            // First, hide loading indicator so error will be visible
-            loadingIndicator.setVisibility(View.GONE);
-            // Clear the adapter of previous book data
-            bookAdapter.clear();
+                List<Book> result=Utils.fetchBooksData(urls[0]);
+                try {
+                    URL url=new URL("https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=") + searchBook;
+                    HttpURLConnection urlConnection=(HttpURLConnection) url.openConnection();
+                    try {
+                        urlConnection.setRequestMethod("GET");
+                    } catch (ProtocolException e) {
+                        e.printStackTrace();
+                    }
+                    return result;
+                    {
 
-            // If there is a valid list of Books, then add them to the adapter's
-            // data set. This will trigger the ListView to update.
-            if (books != null && !books.isEmpty()) {
-                bookAdapter.addAll(books);
-            } else {
-                // Show the empty state with no connection error message
-                emptyStateTextView.setVisibility(View.VISIBLE);
-                // Update empty state with no connection error message
-                emptyStateTextView.setText(R.string.no_data);
+                    }
+                }
             }
         }
-    }
-}
+
+                    // This method runs on the main UI thread after the background work has been
+                    // completed. This method receives as input, the return value from the doInBackground()
+                    // method. First we clear out the adapter, to get rid of books data from a previous
+                    // query to Google Books API. Then we update the adapter with the new list of books,
+                    // which will trigger the ListView to re-populate its list items.
+                    //
+                    @Override
+                    protected void onPostExecute (List < Book > books) {
+                        // First, hide loading indicator so error will be visible
+                        loadingIndicator.setVisibility(View.GONE);
+                        // Clear the adapter of previous book data
+                        bookAdapter.clear();
+
+                        // If there is a valid list of Books, then add them to the adapter's
+                        // data set. This will trigger the ListView to update.
+                        if (books != null && !books.isEmpty()) {
+                            bookAdapter.addAll(books);
+                        } else {
+                            // Show the empty state with no connection error message
+                            emptyStateTextView.setVisibility(View.VISIBLE);
+                            // Update empty state with no connection error message
+                            emptyStateTextView.setText(R.string.no_data);
+                        }
+                    }
+                }
+            }
+
+
+
+
+
+
+
+
 
 
