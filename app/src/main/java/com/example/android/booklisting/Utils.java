@@ -29,6 +29,8 @@ public final class Utils {
     //
     private static final String LOG_TAG = Utils.class.getSimpleName();
 
+    // This is the Google API URL
+    private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=";
 
     // Create a private constructor.
     // This class is only meant to hold static variables and methods, which can be accessed
@@ -150,7 +152,7 @@ public final class Utils {
     }
 
         // Query the Google Books API and return an object with a list of books.
-        public static List<Book> fetchBooksData (String requestUrl){
+        public static List<Book> fetchBooksData (String searchTerm){
 
             // Delay the network response by 2 sec, in order to see how the progress bar works
             try {
@@ -160,7 +162,7 @@ public final class Utils {
             }
 
             // Create URL object
-            URL url = createUrl( requestUrl );
+            URL url = createUrl( BASE_URL + searchTerm );
 
             //Make an HTTP request to the given URL and return a JSON as the response.
             //

@@ -26,13 +26,17 @@ public class BookActivity extends AppCompatActivity {
     public static final String LOG_TAG=BookActivity.class.getName();
 
     // This is the Google API URL
-    private static final String BOOK_REQUEST_URL="https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=";
+    private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=";
+
     // Add a maximum results of 20 to search query
     private static final String MAX_RESULTS="&maxResults=20";
+
     // Adapter for the list of books
     private BookAdapter bookAdapter;
+
     // Edit text field used for searching for books
     private EditText searchBook;
+
     // TextView visible when there is a problem with the internet connection and the list is empty
     private TextView emptyStateTextView;
 
@@ -87,14 +91,17 @@ public class BookActivity extends AppCompatActivity {
         });
 
         // Set a click listener to the ImageButton Search which sends query to the URL based on the user input
-
         buttonSearch.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // If there is a network connection, fetch data
                 if (isInternetConnected) {
-                    Log.e(LOG_TAG, "This is called when there is an internet connection.");
+                    String searchTerm = searchBook.getText().toString();
+                    // This is called when there is an internet connection.
+                    // Start the AsyncTask to fetch the books data
+                    new BookAsyncTask().execute(BASE_URL + searchTerm + MAX_RESULTS);
+
                 } else {
                     Log.e(LOG_TAG, "This is called when there is no internet connection.");
                     // Otherwise, display error
@@ -113,13 +120,13 @@ public class BookActivity extends AppCompatActivity {
         BookAsyncTask task = new BookAsyncTask();
 
         // Start the AsyncTask to fetch the books data
-        new BookAsyncTask().execute(BOOK_REQUEST_URL + searchBook + MAX_RESULTS);
+        new BookAsyncTask().execute(searchTerm);
 
         // If there is an internet connection
         if (isInternetConnected) {
             Log.e(LOG_TAG, "This is called when there is an internet connection.");
             // Start the AsyncTask to fetch the books data
-            task.execute(BOOK_REQUEST_URL);
+            task.execute(BASE_URL);
 
         } else {
             Log.e(LOG_TAG, "This is called when there is no internet connection.");
@@ -184,6 +191,7 @@ public class BookActivity extends AppCompatActivity {
                 return null;
             }
             List<Book> result=Utils.fetchBooksData(urls[0]);
+            Log.i("search",urls[0]);
 
                 return result;
         }
