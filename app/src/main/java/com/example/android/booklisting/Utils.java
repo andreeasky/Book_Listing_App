@@ -110,34 +110,49 @@ public final class Utils {
             for (int i = 0; i < bookArray.length(); i++) {
 
                 // Get a single book at position i within the list of books
-                JSONObject currentBook = bookArray.getJSONObject( i );
+                JSONObject currentBook=bookArray.getJSONObject(i);
 
                 // For a given book, extract the JSONObject associated with the
                 // key called "volumeInfo", which represents a list of all information
                 // for that book.
-                JSONObject volumeInfo = currentBook.getJSONObject( "volumeInfo" );
+                JSONObject volumeInfo=currentBook.getJSONObject("volumeInfo");
 
-                // Extract the value for the key called "title"
-                String title = volumeInfo.getString( "title" );
+                String title=null;
+                if (volumeInfo.has("title")) {
+                    // Extract the value for the key called "title"
+                    title=volumeInfo.getString("title");
+                }
 
-                // Extract the value for the key called "author"
-                String author = volumeInfo.getString( "author" );
+                String author=null;
+                if (volumeInfo.has("author")) {
+                    // Extract the value for the key called "author"
+                    author=volumeInfo.getString("author");
+                }
 
-                // Extract the value for the key called "description"
-                String description = volumeInfo.getString( "description" );
+                String description=null;
+                if (volumeInfo.has("description")) {
+                    // Extract the value for the key called "description"
+                    description=volumeInfo.getString("description");
+                }
 
-                // Extract the value for the key called "image"
-                String image = volumeInfo.getString( "image" );
+                String picture=null;
+                if (volumeInfo.has("picture")) {
+                    // Extract the value for the key called "picture"
+                    String image=volumeInfo.getString("picture");
+                }
 
-                // Extract the value for the key called "url"
-                String url = volumeInfo.getString( "url" );
+                String url=null;
+                if (volumeInfo.has("url")) {
+                    // Extract the value for the key called "url"
+                    url=volumeInfo.getString("url");
+                }
 
                 // Create a new Book object with the title, author, description,
                 // image and url from the JSON response.
-                Book book = new Book( title, author, description, image, url );
+                Book book=new Book(title, author, description, picture, url);
 
                 // Add the new Book to the list of books.
-                books.add( book );
+                books.add(book);
             }
 
         } catch (JSONException e) {
