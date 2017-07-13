@@ -152,7 +152,7 @@ public final class Utils {
     }
 
         // Query the Google Books API and return an object with a list of books.
-        public static List<Book> fetchBooksData (String searchTerm){
+        public static List<Book> fetchBooksData (String searchUrl){
 
             // Delay the network response by 2 sec, in order to see how the progress bar works
             try {
@@ -162,7 +162,8 @@ public final class Utils {
             }
 
             // Create URL object
-            URL url = createUrl( BASE_URL + searchTerm );
+            URL url = createUrl( searchUrl );
+            Log.i("final url",url.toString());
 
             //Make an HTTP request to the given URL and return a JSON as the response.
             //
