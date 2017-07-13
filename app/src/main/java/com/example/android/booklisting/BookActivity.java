@@ -114,30 +114,6 @@ public class BookActivity extends AppCompatActivity {
                 }
             }
         });
-
-        String searchTerm = searchBook.getText().toString();
-
-        BookAsyncTask task = new BookAsyncTask();
-
-        // Start the AsyncTask to fetch the books data
-        new BookAsyncTask().execute(searchTerm);
-
-        // If there is an internet connection
-        if (isInternetConnected) {
-            Log.e(LOG_TAG, "This is called when there is an internet connection.");
-            // Start the AsyncTask to fetch the books data
-            task.execute(BASE_URL);
-
-        } else {
-            Log.e(LOG_TAG, "This is called when there is no internet connection.");
-            // Otherwise, display error
-            // First, hide loading indicator so error will be visible
-            loadingIndicator.setVisibility(View.GONE);
-            // Show the empty state with no connection error message
-            emptyStateTextView.setVisibility(View.VISIBLE);
-            // Update empty state with no connection error message
-            emptyStateTextView.setText(R.string.no_internet_connection);
-        }
     }
 
     // Check the internet connection
