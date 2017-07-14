@@ -3,7 +3,6 @@ package com.example.android.booklisting;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -82,8 +81,7 @@ public class BookActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Book currentBook=bookAdapter.getItem(position);
-                Uri bookUri=Uri.parse(currentBook.getUrl());
-                Intent webIntent=new Intent(Intent.ACTION_VIEW, bookUri);
+                Intent webIntent=new Intent(Intent.ACTION_VIEW);
                 if (webIntent.resolveActivity(getPackageManager()) != null) {
                     startActivity(webIntent);
                 }
@@ -97,10 +95,10 @@ public class BookActivity extends AppCompatActivity {
 
                 // If there is a network connection, fetch data
                 if (isInternetConnected) {
-                    String searchTerm = searchBook.getText().toString();
+                    String searchUrl = searchBook.getText().toString();
                     // This is called when there is an internet connection.
                     // Start the AsyncTask to fetch the books data
-                    new BookAsyncTask().execute(BASE_URL + searchTerm + MAX_RESULTS);
+                    new BookAsyncTask().execute(BASE_URL + searchUrl + MAX_RESULTS);
 
                 } else {
                     Log.e(LOG_TAG, "This is called when there is no internet connection.");

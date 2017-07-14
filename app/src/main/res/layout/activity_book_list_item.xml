@@ -8,13 +8,6 @@
     android:orientation="horizontal"
     tools:context="com.example.android.booklisting.BookActivity">
 
-    <ImageView
-        android:id="@+id/image_book"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:padding="10dp"
-        android:src="@mipmap/ic_launcher_round"/>
-
     <LinearLayout
         android:id="@+id/list_item_layout"
         android:layout_width="match_parent"

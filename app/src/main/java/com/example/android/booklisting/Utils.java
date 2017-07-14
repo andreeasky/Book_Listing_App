@@ -117,39 +117,27 @@ public final class Utils {
                 // for that book.
                 JSONObject volumeInfo=currentBook.getJSONObject("volumeInfo");
 
-                String title=null;
+                String title = "N/A";
                 if (volumeInfo.has("title")) {
                     // Extract the value for the key called "title"
                     title=volumeInfo.getString("title");
                 }
 
-                String author=null;
+                String author = "N/A";
                 if (volumeInfo.has("author")) {
                     // Extract the value for the key called "author"
                     author=volumeInfo.getString("author");
                 }
 
-                String description=null;
+                String description = "N/A";
                 if (volumeInfo.has("description")) {
                     // Extract the value for the key called "description"
                     description=volumeInfo.getString("description");
                 }
 
-                String picture=null;
-                if (volumeInfo.has("picture")) {
-                    // Extract the value for the key called "picture"
-                    String image=volumeInfo.getString("picture");
-                }
-
-                String url=null;
-                if (volumeInfo.has("url")) {
-                    // Extract the value for the key called "url"
-                    url=volumeInfo.getString("url");
-                }
-
                 // Create a new Book object with the title, author, description,
                 // image and url from the JSON response.
-                Book book=new Book(title, author, description, picture, url);
+                Book book=new Book(title, author, description);
 
                 // Add the new Book to the list of books.
                 books.add(book);
@@ -177,7 +165,7 @@ public final class Utils {
             }
 
             // Create URL object
-            URL url = createUrl( searchUrl );
+            URL url = createUrl(BASE_URL + searchUrl );
             Log.i("final url",url.toString());
 
             //Make an HTTP request to the given URL and return a JSON as the response.

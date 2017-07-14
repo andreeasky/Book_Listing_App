@@ -68,12 +68,6 @@ public class BookAdapter extends ArrayAdapter<Book>{
         // Display the description of the current book in that TextView
         descriptionView.setText(currentBook.getDescription());
 
-        // Find the TextView with view ID image_book.
-        TextView pictureView = (TextView) listItemView.findViewById(R.id.image_book);
-
-        // Display the picture of the current book in that TextView
-        pictureView .setText(currentBook.getPicture());
-
         // Return the list item view
         return listItemView;
     }
