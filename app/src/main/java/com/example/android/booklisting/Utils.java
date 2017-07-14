@@ -123,10 +123,10 @@ public final class Utils {
                     title=volumeInfo.getString("title");
                 }
 
-                String authors = "";
-                if (bookArray.has(authors)) {
+                String authors = "[]";
+                if (volumeInfo.has("authors")) {
                     // Extract the value for the key called "authors"
-                    authors=bookArray.getString(i);
+                    authors=volumeInfo.getString(authors);
 
                 }
 
