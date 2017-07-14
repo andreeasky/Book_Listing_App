@@ -18,6 +18,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.sql.DriverManager.println;
+
 /**
  * Created by User on 7/10/2017.
  */
@@ -123,11 +125,10 @@ public final class Utils {
                     title=volumeInfo.getString("title");
                 }
 
-                String author = "N/A";
-                JSONObject authors = new JSONObject();
-                if (volumeInfo.has("author")) {
-                    // Extract the value for the key called "author"
-                    author=volumeInfo.getJSONObject(authors);
+                if (volumeInfo.has("authors")) {
+                    // Extract the value for the key called "authors"
+                    authors=volumeInfo.getString["authors"];
+
                 }
 
                 String description = "N/A";
@@ -138,7 +139,7 @@ public final class Utils {
 
                 // Create a new Book object with the title, author, description,
                 // image and url from the JSON response.
-                Book book=new Book(title, author, description);
+                Book book=new Book(title, authors, description);
 
                 // Add the new Book to the list of books.
                 books.add(book);

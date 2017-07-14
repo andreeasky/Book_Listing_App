@@ -21,12 +21,12 @@ public class Book {
      * Constructs a new Book object.
      *
      * @param title       is the title of the book
-     * @param author      is the author of the book
+     * @param authors      is the author of the book
      * @param description is the description of the book
      */
-    public Book(String title, String author, String description) {
+    public Book(String title, String authors, String description) {
         bookTitle=title;
-        bookAuthor=author;
+        bookAuthor=authors;
         bookDescription=description;
     }
 
