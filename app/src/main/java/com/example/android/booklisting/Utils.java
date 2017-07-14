@@ -18,8 +18,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.sql.DriverManager.println;
-
 /**
  * Created by User on 7/10/2017.
  */
@@ -125,9 +123,10 @@ public final class Utils {
                     title=volumeInfo.getString("title");
                 }
 
-                if (volumeInfo.has("authors")) {
+                String authors = "";
+                if (bookArray.has(authors)) {
                     // Extract the value for the key called "authors"
-                    authors=volumeInfo.getString["authors"];
+                    authors=bookArray.getString(i);
 
                 }
 
