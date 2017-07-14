@@ -124,9 +124,10 @@ public final class Utils {
                 }
 
                 String author = "N/A";
+                JSONObject authors = new JSONObject();
                 if (volumeInfo.has("author")) {
                     // Extract the value for the key called "author"
-                    author=volumeInfo.getString("author");
+                    author=volumeInfo.getJSONObject(authors);
                 }
 
                 String description = "N/A";
