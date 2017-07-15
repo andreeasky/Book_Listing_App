@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -117,11 +116,11 @@ public class BookActivity extends AppCompatActivity {
         books = savedInstanceState.getParcelableArrayList("book");
     }
 
-    List<Book> books = new ArrayList<>();
-    
+    ArrayList<Book> books;
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList("book", (ArrayList<? extends Parcelable>) books);
+        outState.putParcelableArrayList("book", books);
         super.onSaveInstanceState(outState);
     }
 
