@@ -114,11 +114,11 @@ public class BookActivity extends AppCompatActivity {
             }
         });
 
-        savedInstanceState.getParcelableArrayList("book");
+        books = savedInstanceState.getParcelableArrayList("book");
     }
 
     List<Book> books = new ArrayList<>();
-
+    
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("book", (ArrayList<? extends Parcelable>) books);
