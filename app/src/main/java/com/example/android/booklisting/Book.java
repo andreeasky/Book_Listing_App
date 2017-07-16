@@ -41,7 +41,6 @@ public class Book implements Parcelable{
      * @param description is the description of the book
      */
     public Book(String title, String authors, String description) {
-        // Normal actions performed by class, since this is still a normal object!
         bookTitle=title;
         bookAuthor=authors;
         bookDescription=description;
@@ -62,7 +61,6 @@ public class Book implements Parcelable{
             return new Book(in);
         }
 
-        // We just need to copy this and change the type to match our class.
         @Override
         public Book[] newArray(int size) {
             return new Book[size];

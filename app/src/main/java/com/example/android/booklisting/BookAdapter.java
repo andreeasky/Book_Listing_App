@@ -71,4 +71,7 @@ public class BookAdapter extends ArrayAdapter<Book>{
         // Return the list item view
         return listItemView;
     }
+
+    public void add() {
+    }
 }

@@ -45,6 +45,8 @@ public class BookActivity extends AppCompatActivity {
     // Checker for the internet connection
     private boolean isInternetConnected;
 
+    static final String BOOK = "book";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,15 +115,33 @@ public class BookActivity extends AppCompatActivity {
             }
         });
 
-        books = savedInstanceState.getParcelableArrayList("book");
+        bookListView=(ListView) findViewById(R.id.list_view);
+
+        bookAdapter=new BookAdapter(this, new ArrayList<Book>());
+
+        bookAdapter.addAll(books);
+
+        bookListView.setAdapter(bookAdapter);
+
+        if (savedInstanceState != null) {
+            books = savedInstanceState.getParcelableArrayList("book");
+        }
     }
 
-    ArrayList<Book> books;
+    ArrayList<Book> books = new ArrayList<>();
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList("book", books);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        // Always call the superclass so it can restore the view hierarchy
+        super.onRestoreInstanceState(savedInstanceState);
+        // Restore state members from saved instance
+        String bookList = savedInstanceState.getString("book");
     }
 
     // Check the internet connection
