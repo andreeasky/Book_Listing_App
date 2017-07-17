@@ -48,6 +48,8 @@ public class BookActivity extends AppCompatActivity {
 
     public ArrayList<Book> bookList;
 
+    public ArrayList<Book> books;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,17 +118,19 @@ public class BookActivity extends AppCompatActivity {
             }
         });
 
-        bookListView = ( ListView ) findViewById(R.id.list_view);
-
-        bookListView.setAdapter(bookAdapter);
-
-        bookAdapter = new BookAdapter(this, new ArrayList<Book>());
-
-        bookAdapter.addAll(new ArrayList<Book>());
-
         if (savedInstanceState != null) {
 
+            bookListView = ( ListView ) findViewById(R.id.list_view);
+
             bookList = savedInstanceState.getParcelableArrayList("book");
+
+            bookList = books;
+
+            bookAdapter = new BookAdapter(this, new ArrayList<Book>());
+
+            bookListView.setAdapter(bookAdapter);
+
+            bookAdapter.addAll(bookList);
         }
     }
 
@@ -209,18 +213,19 @@ public class BookActivity extends AppCompatActivity {
             // If there is a valid list of Books, then add them to the adapter's
             // data set. This will trigger the ListView to update.
             if (bookList != null && !bookList.isEmpty()) {
-                bookAdapter.addAll(new ArrayList<Book>());
+                bookList = books;
+                Log.i("bookList", bookList.toString());
+                bookAdapter.addAll(bookList);
             } else {
                 // Show the empty state with no connection error message
                 emptyStateTextView.setVisibility(View.VISIBLE);
                 // Update empty state with no connection error message
                 emptyStateTextView.setText(R.string.no_data);
             }
-            bookList = books;
-            Log.i("bookList",bookList.toString());
         }
     }
 }
+
 
 
 
