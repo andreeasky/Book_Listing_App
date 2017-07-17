@@ -15,20 +15,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.android.booklisting.R.id.search;
 
 public class BookActivity extends AppCompatActivity {
 
     // This is the tag for LOG message
-    public static final String LOG_TAG=BookActivity.class.getName();
+    public static final String LOG_TAG = BookActivity.class.getName();
 
     // This is the Google API URL
-    private static final String BASE_URL="https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=";
+    private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=";
 
     // Add a maximum results of 20 to search query
-    private static final String MAX_RESULTS="&maxResults=20";
+    private static final String MAX_RESULTS = "&maxResults=20";
 
     // Adapter for the list of books
     private BookAdapter bookAdapter;
@@ -47,34 +46,36 @@ public class BookActivity extends AppCompatActivity {
 
     static final String BOOK = "book";
 
+    public ArrayList<Book> bookList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
 
         // Find a reference to the ListView in the layout
-        ListView bookListView=(ListView) findViewById(R.id.list_view);
+        ListView bookListView = ( ListView ) findViewById(R.id.list_view);
 
         // Find a reference to the EditText in the layout
-        searchBook=(EditText) findViewById(search);
+        searchBook = ( EditText ) findViewById(search);
 
         // Find a reference to the Search Button in the layout
-        ImageButton buttonSearch=(ImageButton) findViewById(R.id.button_search);
+        ImageButton buttonSearch = ( ImageButton ) findViewById(R.id.button_search);
 
         // Find a reference to the empty state TextView
-        emptyStateTextView=(TextView) findViewById(R.id.empty_text_view);
+        emptyStateTextView = ( TextView ) findViewById(R.id.empty_text_view);
 
         // Set empty state TextView on the ListView with books when no data can be found
         bookListView.setEmptyView(emptyStateTextView);
 
         // Find a reference to the progress bar
-        loadingIndicator=findViewById(R.id.loading_indicator);
+        loadingIndicator = findViewById(R.id.loading_indicator);
 
         // Check internet connection
-        isInternetConnected=checkInternetConnection();
+        isInternetConnected = checkInternetConnection();
 
         // Create a new adapter that takes an empty list of books as input
-        bookAdapter=new BookAdapter(this, new ArrayList<Book>());
+        bookAdapter = new BookAdapter(this, new ArrayList<Book>());
 
         // Set the adapter on the ListView so the list can be populated in the user interface
         bookListView.setAdapter(bookAdapter);
@@ -82,8 +83,8 @@ public class BookActivity extends AppCompatActivity {
         bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Book currentBook=bookAdapter.getItem(position);
-                Intent webIntent=new Intent(Intent.ACTION_VIEW);
+                Book currentBook = bookAdapter.getItem(position);
+                Intent webIntent = new Intent(Intent.ACTION_VIEW);
                 if (webIntent.resolveActivity(getPackageManager()) != null) {
                     startActivity(webIntent);
                 }
@@ -97,7 +98,7 @@ public class BookActivity extends AppCompatActivity {
 
                 // If there is a network connection, fetch data
                 if (isInternetConnected) {
-                    String searchUrl=searchBook.getText().toString();
+                    String searchUrl = searchBook.getText().toString();
                     // This is called when there is an internet connection.
                     // Start the AsyncTask to fetch the books data
                     new BookAsyncTask().execute(BASE_URL + searchUrl + MAX_RESULTS);
@@ -115,43 +116,33 @@ public class BookActivity extends AppCompatActivity {
             }
         });
 
-        bookListView=(ListView) findViewById(R.id.list_view);
+        bookListView = ( ListView ) findViewById(R.id.list_view);
 
-        bookAdapter=new BookAdapter(this, new ArrayList<Book>());
+        bookAdapter = new BookAdapter(this, new ArrayList<Book>());
 
-        bookAdapter.addAll(books);
+        bookAdapter.addAll(bookList);
 
         bookListView.setAdapter(bookAdapter);
 
         if (savedInstanceState != null) {
-            books = savedInstanceState.getParcelableArrayList("book");
+            bookList = savedInstanceState.getParcelableArrayList("book");
         }
     }
 
-    ArrayList<Book> books = new ArrayList<>();
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList("book", books);
+        outState.putParcelableArrayList("book", bookList);
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        // Always call the superclass so it can restore the view hierarchy
-        super.onRestoreInstanceState(savedInstanceState);
-        // Restore state members from saved instance
-        String bookList = savedInstanceState.getString("book");
     }
 
     // Check the internet connection
     private boolean checkInternetConnection() {
         // Get a reference to the ConnectivityManager to check the state of network connectivity
-        ConnectivityManager connectivityManager=(ConnectivityManager)
+        ConnectivityManager connectivityManager = ( ConnectivityManager )
                 getSystemService(CONNECTIVITY_SERVICE);
 
         // Get details on the currently active default network
-        NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             return true;
         } else {
@@ -172,7 +163,7 @@ public class BookActivity extends AppCompatActivity {
     // Then onPostExecute() is passed the result of doInBackground() method, but runs on the
     // UI thread, so it can use the produced data to update the UI.
     //
-    private class BookAsyncTask extends AsyncTask<String, Void, List<Book>> {
+    private class BookAsyncTask extends AsyncTask<String, Void, ArrayList<Book>> {
 
         // This method runs on the UI thread before foInBackground().
         // It shows the progress bar when the internet connection is delayed or slow.
@@ -189,12 +180,12 @@ public class BookActivity extends AppCompatActivity {
         // Books as the result.
         //
         @Override
-        protected List<Book> doInBackground(String... urls) {
+        protected ArrayList<Book> doInBackground(String... urls) {
             // Don't perform the request if there are no URLs, or the first URL is null.
             if (urls.length < 1 || urls[0] == null) {
                 return null;
             }
-            List<Book> result=Utils.fetchBooksData(urls[0]);
+            ArrayList<Book> result = Utils.fetchBooksData(urls[0]);
             Log.i("search", urls[0]);
 
             return result;
@@ -207,16 +198,19 @@ public class BookActivity extends AppCompatActivity {
         // which will trigger the ListView to re-populate its list items.
         //
         @Override
-        protected void onPostExecute(List<Book> books) {
+        protected void onPostExecute(ArrayList<Book> books) {
+
             // First, hide loading indicator so error will be visible
             loadingIndicator.setVisibility(View.GONE);
             // Clear the adapter of previous book data
             bookAdapter.clear();
 
+            bookList = books;
+
             // If there is a valid list of Books, then add them to the adapter's
             // data set. This will trigger the ListView to update.
-            if (books != null && !books.isEmpty()) {
-                bookAdapter.addAll(books);
+            if (bookList != null && !bookList.isEmpty()) {
+                bookAdapter.addAll(bookList);
             } else {
                 // Show the empty state with no connection error message
                 emptyStateTextView.setVisibility(View.VISIBLE);
@@ -226,6 +220,7 @@ public class BookActivity extends AppCompatActivity {
         }
     }
 }
+
 
 
 

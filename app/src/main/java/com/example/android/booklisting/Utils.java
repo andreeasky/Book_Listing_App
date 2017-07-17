@@ -16,7 +16,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -85,7 +84,7 @@ public final class Utils {
     // Return a list of Book objects that has been built up from
     // parsing the given JSON response.
     //
-    private static List<Book> extractFeatureFromJson(String bookJSON) {
+    private static ArrayList<Book> extractFeatureFromJson(String bookJSON) {
 
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty( bookJSON )) {
@@ -93,7 +92,7 @@ public final class Utils {
         }
 
         // Create an empty ArrayList that we can start adding books to
-        List<Book> books = new ArrayList<>();
+        ArrayList<Book> books = new ArrayList<>();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -157,8 +156,8 @@ public final class Utils {
         return books;
     }
 
-        // Query the Google Books API and return an object with a list of books.
-        public static List<Book> fetchBooksData (String searchUrl){
+        // Query the Google Books API and return an object with an ArrayList of books.
+        public static ArrayList<Book> fetchBooksData (String searchUrl){
 
             // Delay the network response by 2 sec, in order to see how the progress bar works
             try {
