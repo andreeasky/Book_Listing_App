@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static com.example.android.booklisting.R.id.loading_indicator;
 import static com.example.android.booklisting.R.id.search;
 
 public class BookActivity extends AppCompatActivity {
@@ -60,7 +61,10 @@ public class BookActivity extends AppCompatActivity {
         bookListView.setEmptyView(emptyStateTextView);
 
         // Find a reference to the progress bar
-        loadingIndicator = findViewById(R.id.loading_indicator);
+        loadingIndicator = findViewById(loading_indicator);
+
+        // Hide the loading indicator by default in the layout
+        loadingIndicator.setVisibility(View.GONE);
 
         // Check internet connection
         isInternetConnected = checkInternetConnection();
@@ -162,6 +166,7 @@ public class BookActivity extends AppCompatActivity {
         //
         @Override
         protected ArrayList<Book> doInBackground(String... urls) {
+
             // Don't perform the request if there are no URLs, or the first URL is null.
             if (urls.length < 1 || urls[0] == null) {
                 return null;
@@ -182,6 +187,7 @@ public class BookActivity extends AppCompatActivity {
 
             // First, hide loading indicator so error will be visible
             loadingIndicator.setVisibility(View.GONE);
+
             // Clear the adapter of previous book data
             bookAdapter.clear();
 
