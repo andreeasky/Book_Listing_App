@@ -15,7 +15,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import static com.example.android.booklisting.R.id.loading_indicator;
-import static com.example.android.booklisting.R.id.search;
 
 public class BookActivity extends AppCompatActivity {
 
@@ -49,7 +48,7 @@ public class BookActivity extends AppCompatActivity {
         ListView bookListView = ( ListView ) findViewById(R.id.list_view);
 
         // Find a reference to the EditText in the layout
-        searchBook = ( EditText ) findViewById(search);
+        searchBook = ( EditText ) findViewById(R.id.search);
 
         // Find a reference to the Search Button in the layout
         ImageButton buttonSearch = ( ImageButton ) findViewById(R.id.button_search);
@@ -61,7 +60,7 @@ public class BookActivity extends AppCompatActivity {
         bookListView.setEmptyView(emptyStateTextView);
 
         // Find a reference to the progress bar
-        loadingIndicator = findViewById(loading_indicator);
+        loadingIndicator = findViewById(R.id.loading_indicator);
 
         // Hide the loading indicator by default in the layout
         loadingIndicator.setVisibility(View.GONE);
