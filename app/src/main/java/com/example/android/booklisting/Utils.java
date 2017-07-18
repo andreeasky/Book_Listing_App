@@ -168,7 +168,6 @@ public final class Utils {
 
             // Create URL object
             URL url = createUrl(BASE_URL + searchUrl );
-            Log.i("final url",url.toString());
 
             //Make an HTTP request to the given URL and return a JSON as the response.
             //

@@ -1,6 +1,5 @@
 package com.example.android.booklisting;
 
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -8,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -22,33 +20,24 @@ public class BookActivity extends AppCompatActivity {
 
     // This is the tag for LOG message
     public static final String LOG_TAG = BookActivity.class.getName();
-
+    // Key used for Saved Instance State of the app
+    static final String BOOK = "book";
     // This is the Google API URL
     private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=";
-
     // Add a maximum results of 20 to search query
     private static final String MAX_RESULTS = "&maxResults=20";
-
+    // Initialization of the bookList variable
+    ArrayList<Book> bookList = new ArrayList<>();
     // Adapter for the list of books
     private BookAdapter bookAdapter;
-
     // Edit text field used for searching for books
     private EditText searchBook;
-
     // TextView visible when there is a problem with the internet connection and the list is empty
     private TextView emptyStateTextView;
-
     // Progress bar visible when the internet connection is delayed or slow
     private View loadingIndicator;
-
     // Checker for the internet connection
     private boolean isInternetConnected;
-
-    static final String BOOK = "book";
-
-    public ArrayList<Book> bookList;
-
-    public ArrayList<Book> books;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,17 +71,6 @@ public class BookActivity extends AppCompatActivity {
         // Set the adapter on the ListView so the list can be populated in the user interface
         bookListView.setAdapter(bookAdapter);
 
-        bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Book currentBook = bookAdapter.getItem(position);
-                Intent webIntent = new Intent(Intent.ACTION_VIEW);
-                if (webIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(webIntent);
-                }
-            }
-        });
-
         // Set a click listener to the ImageButton Search which sends query to the URL based on the user input
         buttonSearch.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
@@ -122,9 +100,7 @@ public class BookActivity extends AppCompatActivity {
 
             bookListView = ( ListView ) findViewById(R.id.list_view);
 
-            bookList = savedInstanceState.getParcelableArrayList("book");
-
-            bookList = books;
+            bookList = savedInstanceState.getParcelableArrayList(BOOK);
 
             bookAdapter = new BookAdapter(this, new ArrayList<Book>());
 
@@ -136,7 +112,7 @@ public class BookActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList("book", bookList);
+        outState.putParcelableArrayList(BOOK, bookList);
         super.onSaveInstanceState(outState);
     }
 
@@ -170,7 +146,7 @@ public class BookActivity extends AppCompatActivity {
     //
     private class BookAsyncTask extends AsyncTask<String, Void, ArrayList<Book>> {
 
-        // This method runs on the UI thread before foInBackground().
+        // This method runs on the UI thread before doInBackground().
         // It shows the progress bar when the internet connection is delayed or slow.
         //
         @Override
@@ -191,7 +167,6 @@ public class BookActivity extends AppCompatActivity {
                 return null;
             }
             ArrayList<Book> result = Utils.fetchBooksData(urls[0]);
-            Log.i("search", urls[0]);
 
             return result;
         }
@@ -212,10 +187,9 @@ public class BookActivity extends AppCompatActivity {
 
             // If there is a valid list of Books, then add them to the adapter's
             // data set. This will trigger the ListView to update.
-            if (bookList != null && !bookList.isEmpty()) {
+            if (books != null && !books.isEmpty()) {
                 bookList = books;
-                Log.i("bookList", bookList.toString());
-                bookAdapter.addAll(bookList);
+                bookAdapter.addAll(books);
             } else {
                 // Show the empty state with no connection error message
                 emptyStateTextView.setVisibility(View.VISIBLE);
