@@ -80,8 +80,14 @@ public class BookActivity extends AppCompatActivity {
                 // If there is a network connection, fetch data
                 if (isInternetConnected) {
                     String searchUrl = searchBook.getText().toString();
+                    // Clear the adapter
+                    bookAdapter.clear();
+                    // Show the circle indicator
+                    loadingIndicator.setVisibility(View.VISIBLE);
+
                     // This is called when there is an internet connection.
                     // Start the AsyncTask to fetch the books data
+
                     new BookAsyncTask().execute(BASE_URL + searchUrl + MAX_RESULTS);
 
                 } else {

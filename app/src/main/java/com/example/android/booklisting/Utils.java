@@ -36,7 +36,7 @@ public final class Utils {
     static final String ITEMS = "items";
 
     // Key used for a list of all information for a book
-    static final String BOOK_INFO = "bookInfo";
+    static final String BOOK_INFO = "volumeInfo";
 
     // Key used for the title of the book
     static final String TITLE = "title";
