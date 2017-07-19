@@ -14,8 +14,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import static com.example.android.booklisting.R.id.loading_indicator;
-
 public class BookActivity extends AppCompatActivity {
 
     // This is the tag for LOG message
@@ -199,7 +197,7 @@ public class BookActivity extends AppCompatActivity {
                 // Show the empty state with no connection error message
                 emptyStateTextView.setVisibility(View.VISIBLE);
                 // Update empty state with no connection error message
-                emptyStateTextView.setText(R.string.no_data);
+                emptyStateTextView.setText(R.string.no_internet_connection);
             }
         }
     }

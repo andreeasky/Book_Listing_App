@@ -32,6 +32,22 @@ public final class Utils {
     // This is the Google API URL
     private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=";
 
+    // Key used for a list of information about a book
+    static final String ITEMS = "items";
+
+    // Key used for a list of all information for a book
+    static final String BOOK_INFO = "bookInfo";
+
+    // Key used for the title of the book
+    static final String TITLE = "title";
+
+    // Key used for the author/s of the book
+    static final String AUTHORS = "authors";
+
+    // Key used for the description of the book
+    static final String DESCRIPTION = "description";
+
+
     // Create a private constructor.
     // This class is only meant to hold static variables and methods, which can be accessed
     // directly from the class name Utils (and an object instance of Utils is not needed).
@@ -103,8 +119,8 @@ public final class Utils {
             JSONObject baseJsonResponse = new JSONObject( bookJSON );
 
             // Extract the JSONArray associated with the key called "items",
-            // which represents a list of information about the book.
-            JSONArray bookArray = baseJsonResponse.getJSONArray( "items" );
+            // which represents a list of information about a book.
+            JSONArray bookArray = baseJsonResponse.getJSONArray( ITEMS );
 
             // For each book in the bookArray, create a Book object
             for (int i = 0; i < bookArray.length(); i++) {
@@ -113,28 +129,28 @@ public final class Utils {
                 JSONObject currentBook=bookArray.getJSONObject(i);
 
                 // For a given book, extract the JSONObject associated with the
-                // key called "volumeInfo", which represents a list of all information
-                // for that book.
-                JSONObject volumeInfo=currentBook.getJSONObject("volumeInfo");
+                // key called "bookInfo", which represents a list of all information
+                // for a book.
+                JSONObject bookInfo=currentBook.getJSONObject(BOOK_INFO);
 
                 String title = "N/A";
-                if (volumeInfo.has("title")) {
+                if (bookInfo.has(TITLE)) {
                     // Extract the value for the key called "title"
-                    title=volumeInfo.getString("title");
+                    title=bookInfo.getString("title");
                 }
 
                 String authors = "N/A";
-                if (volumeInfo.has("authors")) {
+                if (bookInfo.has(AUTHORS)) {
                     // Extract the value for the key called "authors"
-                    authors=volumeInfo.getString("authors");
+                    authors=bookInfo.getString("authors");
                     authors = authors.replaceAll("[\\[\\](){}]","");
                     authors = authors.replace("\"", "");
                 }
 
                 String description = "N/A";
-                if (volumeInfo.has("description")) {
+                if (bookInfo.has(DESCRIPTION)) {
                     // Extract the value for the key called "description"
-                    description=volumeInfo.getString("description");
+                    description=bookInfo.getString("description");
                 }
 
                 // Create a new Book object with the title, author, description,
