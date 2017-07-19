@@ -136,13 +136,13 @@ public final class Utils {
                 String title = "N/A";
                 if (bookInfo.has(TITLE)) {
                     // Extract the value for the key called "title"
-                    title=bookInfo.getString("title");
+                    title=bookInfo.getString(TITLE);
                 }
 
                 String authors = "N/A";
                 if (bookInfo.has(AUTHORS)) {
                     // Extract the value for the key called "authors"
-                    authors=bookInfo.getString("authors");
+                    authors=bookInfo.getString(AUTHORS);
                     authors = authors.replaceAll("[\\[\\](){}]","");
                     authors = authors.replace("\"", "");
                 }
@@ -150,7 +150,7 @@ public final class Utils {
                 String description = "N/A";
                 if (bookInfo.has(DESCRIPTION)) {
                     // Extract the value for the key called "description"
-                    description=bookInfo.getString("description");
+                    description=bookInfo.getString(DESCRIPTION);
                 }
 
                 // Create a new Book object with the title, author, description,
