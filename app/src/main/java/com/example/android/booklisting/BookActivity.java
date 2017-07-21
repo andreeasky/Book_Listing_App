@@ -75,9 +75,10 @@ public class BookActivity extends AppCompatActivity {
                 // If there is a network connection, fetch data
                 if (checkInternetConnection()) {
 
-                    String searchUrl = searchBook.getText().toString();
                     // Clear the adapter
                     bookAdapter.clear();
+
+                    String searchUrl = searchBook.getText().toString();
                     // Show the circle indicator
                     loadingIndicator.setVisibility(View.VISIBLE);
 
@@ -166,6 +167,9 @@ public class BookActivity extends AppCompatActivity {
         @Override
         protected ArrayList<Book> doInBackground(String... urls) {
 
+            // Clear the adapter of previous book data
+            bookAdapter.clear();
+
             // Don't perform the request if there are no URLs, or the first URL is null.
             if (urls.length < 1 || urls[0] == null) {
                 return null;
@@ -184,11 +188,11 @@ public class BookActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<Book> books) {
 
-            // First, hide loading indicator so error will be visible
-            loadingIndicator.setVisibility(View.GONE);
-
             // Clear the adapter of previous book data
             bookAdapter.clear();
+
+            // First, hide loading indicator so error will be visible
+            loadingIndicator.setVisibility(View.GONE);
 
             // If there is a valid list of Books, then add them to the adapter's
             // data set. This will trigger the ListView to update.
