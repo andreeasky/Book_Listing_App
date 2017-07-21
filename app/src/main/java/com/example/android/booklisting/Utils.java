@@ -20,26 +20,20 @@ import java.util.ArrayList;
 // Helper methods related to requesting and receiving books data from Google Books.
 public final class Utils {
 
-    // Tag for the log messages
-    private static final String LOG_TAG = Utils.class.getSimpleName();
-
-    // This is the Google API URL
-    private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=android";
-
     // Key used for a list of information about a book
     static final String ITEMS = "items";
-
     // Key used for a list of all information for a book
     static final String BOOK_INFO = "volumeInfo";
-
     // Key used for the title of the book
     static final String TITLE = "title";
-
     // Key used for the author/s of the book
     static final String AUTHORS = "authors";
-
     // Key used for the description of the book
     static final String DESCRIPTION = "description";
+    // Tag for the log messages
+    private static final String LOG_TAG = Utils.class.getSimpleName();
+    // This is the Google API URL
+    private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=android";
 
     // Create a private constructor.
     // This class is only meant to hold static variables and methods, which can be accessed
@@ -49,7 +43,7 @@ public final class Utils {
     }
 
     // Make an HTTP request to the given URL and return a String as the response.
-    private static String makeHTTPRequest (URL url) throws IOException {
+    private static String makeHTTPRequest(URL url) throws IOException {
         String jsonResponse = "";
 
         // If the URL is null, then return early.
@@ -60,22 +54,22 @@ public final class Utils {
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
         try {
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout( 10000 /* milliseconds */ );
-            urlConnection.setConnectTimeout( 15000 /* milliseconds */ );
-            urlConnection.setRequestMethod( "GET" );
+            urlConnection = ( HttpURLConnection ) url.openConnection();
+            urlConnection.setReadTimeout(10000 /* milliseconds */);
+            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
             // If the request was successful (response code 200),
             // then read the input stream and parse the response.
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
-                jsonResponse = readFromStream( inputStream );
+                jsonResponse = readFromStream(inputStream);
             } else {
-                Log.e( LOG_TAG, "Error response code: " + urlConnection.getResponseCode() );
+                Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e( LOG_TAG, "Problem retrieving the book JSON result:", e );
+            Log.e(LOG_TAG, "Problem retrieving the book JSON result:", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -96,7 +90,7 @@ public final class Utils {
     private static ArrayList<Book> extractFeatureFromJson(String bookJSON) {
 
         // If the JSON string is empty or null, then return early.
-        if (TextUtils.isEmpty( bookJSON )) {
+        if (TextUtils.isEmpty(bookJSON)) {
             return null;
         }
 
@@ -187,65 +181,65 @@ public final class Utils {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e( LOG_TAG, "Problem parsing the JSON books list", e );
+            Log.e(LOG_TAG, "Problem parsing the JSON books list", e);
         }
 
         // Return the list of books
         return books;
     }
 
-        // Query the Google Books API and return an object with an ArrayList of books.
-        public static ArrayList<Book> fetchBooksData (String searchUrl){
+    // Query the Google Books API and return an object with an ArrayList of books.
+    public static ArrayList<Book> fetchBooksData(String searchUrl) {
 
-            // Delay the network response by 2 sec, in order to see how the progress bar works
-            try {
-                Thread.sleep( 2000 );
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            // Create URL object
-            URL url = createUrl(searchUrl );
-
-            //Make a HTTP request to the given URL and return a JSON as the response.
-            //
-            String jsonResponse = null;
-            try {
-                jsonResponse = makeHTTPRequest(url);
-            } catch (IOException e) {
-                Log.e( LOG_TAG, "Error perfoming the HTTP request", e );
-
-            }
-
-            // Return the list of Books.
-            return extractFeatureFromJson( jsonResponse );
+        // Delay the network response by 2 sec, in order to see how the progress bar works
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
-        // Returns new URL object from the given search query.
-        private static URL createUrl (String searchBook){
-            URL url = null;
-            try {
-                url = new URL( searchBook );
-            } catch (MalformedURLException e) {
-                Log.e( LOG_TAG, "Problem building the URL ", e );
-            }
-            return url;
+        // Create URL object
+        URL url = createUrl(searchUrl);
+
+        //Make a HTTP request to the given URL and return a JSON as the response.
+        //
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHTTPRequest(url);
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error perfoming the HTTP request", e);
+
         }
 
-        // Convert the InputStream into a String which contains the whole JSON response from the server.
-        private static String readFromStream(InputStream inputStream) throws IOException {
-            StringBuilder output = new StringBuilder();
-            if (inputStream != null) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName( "UTF-8" ) );
-                BufferedReader reader = new BufferedReader( inputStreamReader );
-                String line = reader.readLine();
-                while (line != null) {
-                    output.append( line );
-                    line = reader.readLine();
-                }
-            }
-            return output.toString();
+        // Return the list of Books.
+        return extractFeatureFromJson(jsonResponse);
+    }
+
+    // Returns new URL object from the given search query.
+    private static URL createUrl(String searchBook) {
+        URL url = null;
+        try {
+            url = new URL(searchBook);
+        } catch (MalformedURLException e) {
+            Log.e(LOG_TAG, "Problem building the URL ", e);
         }
+        return url;
+    }
+
+    // Convert the InputStream into a String which contains the whole JSON response from the server.
+    private static String readFromStream(InputStream inputStream) throws IOException {
+        StringBuilder output = new StringBuilder();
+        if (inputStream != null) {
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
+            BufferedReader reader = new BufferedReader(inputStreamReader);
+            String line = reader.readLine();
+            while (line != null) {
+                output.append(line);
+                line = reader.readLine();
+            }
+        }
+        return output.toString();
+    }
 }
 
 

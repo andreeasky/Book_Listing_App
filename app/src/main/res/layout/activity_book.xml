@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:http="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="@dimen/padding_large"
-    android:background="@drawable/book"
-    tools:context="com.example.android.booklisting.BookActivity">
+                xmlns:http="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/book"
+                android:padding="@dimen/padding_large"
+                tools:context="com.example.android.booklisting.BookActivity">
 
     <LinearLayout
         android:id="@+id/search_books"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_medium"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/padding_medium">
 
         <EditText
             android:id="@+id/search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:padding="@dimen/padding_large"
             android:hint="Search Books"
-            android:textSize="@dimen/textSize_EditText"
+            android:padding="@dimen/padding_large"
             android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            android:textColorHint="@color/colorPrimary"/>
+            android:textColorHint="@color/colorPrimary"
+            android:textSize="@dimen/textSize_EditText"
+            android:textStyle="bold"/>
 
         <ImageButton
             android:id="@+id/button_search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
             android:layout_toRightOf="@+id/search"
-            android:background="@android:color/transparent"
+            android:layout_weight="2"
             android:adjustViewBounds="true"
+            android:background="@android:color/transparent"
             android:src="@drawable/ic_search_white_36dp"/>
 
     </LinearLayout>
