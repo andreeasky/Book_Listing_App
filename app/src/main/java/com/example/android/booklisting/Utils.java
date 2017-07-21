@@ -207,7 +207,7 @@ public final class Utils {
             // Create URL object
             URL url = createUrl(searchUrl );
 
-            //Make an HTTP request to the given URL and return a JSON as the response.
+            //Make a HTTP request to the given URL and return a JSON as the response.
             //
             String jsonResponse = null;
             try {
