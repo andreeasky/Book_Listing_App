@@ -22,8 +22,6 @@ public class BookActivity extends AppCompatActivity {
     static final String BOOK = "book";
     // This is the Google API URL
     private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=";
-    // Add a maximum results of 20 to search query
-    private static final String MAX_RESULTS = "&maxResults=20";
     // Initialization of the bookList variable
     ArrayList<Book> bookList = new ArrayList<>();
     // Adapter for the list of books
