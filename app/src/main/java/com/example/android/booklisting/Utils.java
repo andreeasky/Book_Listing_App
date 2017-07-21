@@ -17,20 +17,14 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-
-/**
- * Created by User on 7/10/2017.
- */
-
 // Helper methods related to requesting and receiving books data from Google Books.
 public final class Utils {
 
     // Tag for the log messages
-    //
     private static final String LOG_TAG = Utils.class.getSimpleName();
 
     // This is the Google API URL
-    private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=";
+    private static final String BASE_URL = "https://www.googleapis.com/books/v1/volumes?&maxResults=10&q=android";
 
     // Key used for a list of information about a book
     static final String ITEMS = "items";
@@ -46,7 +40,6 @@ public final class Utils {
 
     // Key used for the description of the book
     static final String DESCRIPTION = "description";
-
 
     // Create a private constructor.
     // This class is only meant to hold static variables and methods, which can be accessed
@@ -116,46 +109,75 @@ public final class Utils {
         try {
 
             // Create a JSONObject from the JSON response string
-            JSONObject baseJsonResponse = new JSONObject( bookJSON );
+            JSONObject baseJsonResponse = new JSONObject(bookJSON);
 
             // Extract the JSONArray associated with the key called "items",
             // which represents a list of information about a book.
-            JSONArray bookArray = baseJsonResponse.getJSONArray( ITEMS );
+            JSONArray bookArray = baseJsonResponse.getJSONArray(ITEMS);
+
+            int i = 0;
+
+            JSONObject currentBook = bookArray.getJSONObject(i);
+
+            if (currentBook.has(ITEMS)) {
+                // Extract the value for the key called "items"
+                currentBook.getJSONArray(ITEMS);
+
+
+                String bookTitle = "N/A";
+                if (currentBook.has(TITLE)) {
+                    // Extract the value for the key called "title"
+                    bookTitle = currentBook.getString(TITLE);
+                }
+
+                String bookAuthors = "N/A";
+                if (currentBook.has(AUTHORS)) {
+                    // Extract the value for the key called "authors"
+                    bookAuthors = currentBook.getString(AUTHORS);
+                    bookAuthors = bookAuthors.replaceAll("[\\[\\](){}]", "");
+                    bookAuthors = bookAuthors.replace("\"", "");
+                }
+
+                String bookDescription = "N/A";
+                if (currentBook.has(DESCRIPTION)) {
+                    // Extract the value for the key called "description"
+                    bookDescription = currentBook.getString(DESCRIPTION);
+                }
+            }
 
             // For each book in the bookArray, create a Book object
-            for (int i = 0; i < bookArray.length(); i++) {
+            for (i = 0; i < bookArray.length(); i++) {
 
                 // Get a single book at position i within the list of books
-                JSONObject currentBook=bookArray.getJSONObject(i);
+                currentBook = bookArray.getJSONObject(i);
 
                 // For a given book, extract the JSONObject associated with the
                 // key called "bookInfo", which represents a list of all information
                 // for a book.
-                JSONObject bookInfo=currentBook.getJSONObject(BOOK_INFO);
+                JSONObject bookInfo = currentBook.getJSONObject(BOOK_INFO);
 
                 String title = "N/A";
                 if (bookInfo.has(TITLE)) {
                     // Extract the value for the key called "title"
-                    title=bookInfo.getString(TITLE);
+                    title = bookInfo.getString(TITLE);
                 }
 
                 String authors = "N/A";
                 if (bookInfo.has(AUTHORS)) {
                     // Extract the value for the key called "authors"
-                    authors=bookInfo.getString(AUTHORS);
-                    authors = authors.replaceAll("[\\[\\](){}]","");
+                    authors = bookInfo.getString(AUTHORS);
+                    authors = authors.replaceAll("[\\[\\](){}]", "");
                     authors = authors.replace("\"", "");
                 }
 
                 String description = "N/A";
                 if (bookInfo.has(DESCRIPTION)) {
                     // Extract the value for the key called "description"
-                    description=bookInfo.getString(DESCRIPTION);
+                    description = bookInfo.getString(DESCRIPTION);
                 }
 
-                // Create a new Book object with the title, author, description,
-                // image and url from the JSON response.
-                Book book=new Book(title, authors, description);
+                // Create a new Book object with the title, author and description from the JSON response.
+                Book book = new Book(title, authors, description);
 
                 // Add the new Book to the list of books.
                 books.add(book);
@@ -183,7 +205,7 @@ public final class Utils {
             }
 
             // Create URL object
-            URL url = createUrl(BASE_URL + searchUrl );
+            URL url = createUrl(searchUrl );
 
             //Make an HTTP request to the given URL and return a JSON as the response.
             //

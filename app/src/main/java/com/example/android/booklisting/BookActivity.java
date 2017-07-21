@@ -35,7 +35,7 @@ public class BookActivity extends AppCompatActivity {
     // Progress bar visible when the internet connection is delayed or slow
     private View loadingIndicator;
     // Checker for the internet connection
-    private boolean isInternetConnected;
+    private boolean checkInternetConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +63,6 @@ public class BookActivity extends AppCompatActivity {
         // Hide the loading indicator by default in the layout
         loadingIndicator.setVisibility(View.GONE);
 
-        // Check internet connection
-        isInternetConnected = checkInternetConnection();
-
         // Create a new adapter that takes an empty list of books as input
         bookAdapter = new BookAdapter(this, new ArrayList<Book>());
 
@@ -78,7 +75,8 @@ public class BookActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 // If there is a network connection, fetch data
-                if (isInternetConnected) {
+                if (checkInternetConnection()) {
+
                     String searchUrl = searchBook.getText().toString();
                     // Clear the adapter
                     bookAdapter.clear();
@@ -88,7 +86,7 @@ public class BookActivity extends AppCompatActivity {
                     // This is called when there is an internet connection.
                     // Start the AsyncTask to fetch the books data
 
-                    new BookAsyncTask().execute(BASE_URL + searchUrl + MAX_RESULTS);
+                    new BookAsyncTask().execute(BASE_URL + searchUrl);
 
                 } else {
                     Log.e(LOG_TAG, "This is called when there is no internet connection.");
@@ -143,7 +141,7 @@ public class BookActivity extends AppCompatActivity {
     }
 
     // {@link AsyncTask} to perform the network request on a background thread, and then
-    // update the UI with the list of earthquakes in the response.
+    // update the UI with the list of books in the response.
     //
     // We'll only override two of the methods of AsyncTask: doInBackground() and onPostExecute().
     // The doInBackground() method runs on a background thread, so it can run long-running code

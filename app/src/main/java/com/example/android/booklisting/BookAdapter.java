@@ -1,9 +1,5 @@
 package com.example.android.booklisting;
 
-/**
- * Created by User on 7/10/2017.
- */
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,8 +66,5 @@ public class BookAdapter extends ArrayAdapter<Book>{
 
         // Return the list item view
         return listItemView;
-    }
-
-    public void add() {
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
+    android:padding="@dimen/padding_large"
     android:orientation="horizontal"
     tools:context="com.example.android.booklisting.BookActivity">
 
@@ -12,7 +12,7 @@
         android:id="@+id/list_item_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="@dimen/padding_medium"
         android:orientation="vertical">
 
         <TextView
@@ -20,30 +20,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            android:textSize="19sp"
+            android:textSize="@dimen/textSize_title"
             android:textColor="@color/colorAccent"
             android:textStyle="bold"
-            android:paddingBottom="8dp"
-            tools:text="Book Title"/>
+            android:paddingBottom="@dimen/padding_medium"
+            tools:text="@string/title"/>
 
         <TextView
             android:id="@+id/author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="17sp"
+            android:textSize="@dimen/textSize_author"
             android:textStyle="bold|italic"
             android:textColor="@android:color/white"
-            android:paddingBottom="6dp"
-            tools:text="Author" />
+            android:paddingBottom="@dimen/padding_small"
+            tools:text="@string/author" />
 
         <TextView
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="@dimen/textSize_description"
             android:textStyle="bold"
             android:textColor="@color/color_description"
-            tools:text="Description" />
+            tools:text="@string/description" />
 
     </LinearLayout>
 

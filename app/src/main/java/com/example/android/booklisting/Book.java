@@ -3,53 +3,9 @@ package com.example.android.booklisting;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by User on 7/10/2017.
- */
-
 // A Book object contains information related to a single book.
 
-public class Book implements Parcelable{
-
-    // Book title
-    private String bookTitle;
-
-    // Book author
-    private String bookAuthor;
-
-    // Book description
-    private String bookDescription;
-
-    @Override
-    public void writeToParcel(Parcel out, int flags) {
-        out.writeString(bookTitle);
-        out.writeString(bookAuthor);
-        out.writeString(bookDescription);
-    }
-
-    private Book(Parcel in) {
-        bookTitle = in.readString();
-        bookAuthor = in.readString();
-        bookDescription = in.readString();
-    }
-
-    /**
-     * Constructs a new Book object.
-     *
-     * @param title       is the title of the book
-     * @param authors      is the author of the book
-     * @param description is the description of the book
-     */
-    public Book(String title, String authors, String description) {
-        bookTitle=title;
-        bookAuthor=authors;
-        bookDescription=description;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
+public class Book implements Parcelable {
 
     public static final Parcelable.Creator<Book> CREATOR
             = new Parcelable.Creator<Book>() {
@@ -66,6 +22,43 @@ public class Book implements Parcelable{
             return new Book[size];
         }
     };
+    // Book title
+    private String bookTitle;
+    // Book author
+    private String bookAuthor;
+    // Book description
+    private String bookDescription;
+
+    private Book(Parcel in) {
+        bookTitle = in.readString();
+        bookAuthor = in.readString();
+        bookDescription = in.readString();
+    }
+
+    /**
+     * Constructs a new Book object.
+     *
+     * @param title       is the title of the book
+     * @param authors     is the author of the book
+     * @param description is the description of the book
+     */
+    public Book(String title, String authors, String description) {
+        bookTitle = title;
+        bookAuthor = authors;
+        bookDescription = description;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(bookTitle);
+        out.writeString(bookAuthor);
+        out.writeString(bookDescription);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     /**
      * Returns the title of the book.

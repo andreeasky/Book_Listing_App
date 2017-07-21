@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="@dimen/padding_large"
     android:background="@drawable/book"
     tools:context="com.example.android.booklisting.BookActivity">
 
@@ -12,7 +12,7 @@
         android:id="@+id/search_books"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
+        android:padding="@dimen/padding_medium"
         android:orientation="horizontal">
 
         <EditText
@@ -20,9 +20,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="8"
-            android:padding="10dp"
+            android:padding="@dimen/padding_large"
             android:hint="Search Books"
-            android:textSize="19sp"
+            android:textSize="@dimen/textSize_EditText"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:textColorHint="@color/colorPrimary"/>
