@@ -8,43 +8,35 @@
               android:padding="@dimen/padding_large"
               tools:context="com.example.android.booklisting.BookActivity">
 
-    <LinearLayout
-        android:id="@+id/list_item_layout"
+    <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/padding_medium">
+        android:layout_gravity="top"
+        android:paddingBottom="@dimen/padding_medium"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/textSize_title"
+        android:textStyle="bold"
+        tools:text="@string/title"/>
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:paddingBottom="@dimen/padding_medium"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/textSize_title"
-            android:textStyle="bold"
-            tools:text="@string/title"/>
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding_small"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/textSize_author"
+        android:textStyle="bold|italic"
+        tools:text="@string/author"/>
 
-        <TextView
-            android:id="@+id/author"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/padding_small"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/textSize_author"
-            android:textStyle="bold|italic"
-            tools:text="@string/author"/>
-
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_description"
-            android:textSize="@dimen/textSize_description"
-            android:textStyle="bold"
-            tools:text="@string/description"/>
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/color_description"
+        android:textSize="@dimen/textSize_description"
+        android:textStyle="bold"
+        tools:text="@string/description"/>
 
 </LinearLayout>
+

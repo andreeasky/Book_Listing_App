@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:http="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/book"
-                android:padding="@dimen/padding_large"
-                tools:context="com.example.android.booklisting.BookActivity">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:http="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@drawable/book"
+             android:padding="@dimen/padding_large"
+             tools:context="com.example.android.booklisting.BookActivity">
 
     <LinearLayout
         android:id="@+id/search_books"
@@ -44,9 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/search_books"
-        android:orientation="vertical">
-
-    </ListView>
+        android:orientation="vertical"/>
 
     <!-- Empty TextView is only visible when the list has no items. -->
     <TextView
@@ -65,4 +63,4 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"/>
 
-</RelativeLayout>
+</FrameLayout>
